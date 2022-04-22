@@ -1,4 +1,16 @@
-﻿namespace Tenebrae
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MonoMod.RuntimeDetour.HookGen;
+using ReLogic.Content;
+using System;
+using System.Reflection;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.UI.Elements;
+using Terraria.ModLoader;
+using Terraria.UI.Chat;
+
+namespace Tenebrae
 {
     // By: S-Pladison
     // Code is quite simple, but there are a lot of reflections, which is not very good
@@ -30,9 +42,9 @@
 
             if (!Main.dedServ)
             {
-                effect = ModContent.Request<Effect>(nameof(ShaderNameMod) + "/Assets/Effects/AnimatedModName", AssetRequestMode.ImmediateLoad);
+                effect = ModContent.Request<Effect>(nameof(Tenebrae) + "/Assets/Effects/AnimatedModName", AssetRequestMode.ImmediateLoad);
 
-                var backgroundTexture = ModContent.Request<Texture2D>(nameof(ShaderNameMod) + "/Assets/Textures/Misc/AnimatedModName", AssetRequestMode.ImmediateLoad).Value;
+                var backgroundTexture = ModContent.Request<Texture2D>(nameof(Tenebrae) + "/Assets/Textures/Misc/AnimatedModName", AssetRequestMode.ImmediateLoad).Value;
                 effect.Value.Parameters["texture1"].SetValue(backgroundTexture);
             }
 

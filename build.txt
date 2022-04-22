@@ -1,5 +1,5 @@
-displayName = [c/e28bfc:Te][c/ec76f5:ne][c/e85fca:br][c/db487e:ae ][c/e36c3d:Mo][c/e38b3d:d]
+displayName = Tenebrae Mod
 author = Scratch Lunin and the Tenebrae Team
-version = 0.1
+version = 0.0.0.1
 homepage = https://discord.com/invite/KPsFQzG
 includePDB = true

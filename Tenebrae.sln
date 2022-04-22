@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tenebrae", "Tenebrae.csproj", "{5D2B3249-A942-4B71-86DC-A6AE3F87B861}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TenebraeMod", "TenebraeMod.csproj", "{8D48024F-8D9F-41D6-A67D-6CB143971FA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5D2B3249-A942-4B71-86DC-A6AE3F87B861}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D2B3249-A942-4B71-86DC-A6AE3F87B861}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D2B3249-A942-4B71-86DC-A6AE3F87B861}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D2B3249-A942-4B71-86DC-A6AE3F87B861}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D48024F-8D9F-41D6-A67D-6CB143971FA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D48024F-8D9F-41D6-A67D-6CB143971FA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D48024F-8D9F-41D6-A67D-6CB143971FA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D48024F-8D9F-41D6-A67D-6CB143971FA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7AEBEE68-6BBF-4E16-AC78-6EB848FF8676}
+		SolutionGuid = {F0A82757-930E-4C46-8603-B0C417CD669E}
 	EndGlobalSection
 EndGlobal
