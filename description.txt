@@ -1,0 +1,6 @@
+[c/e28bfc:Tenebrae] is a pretty insignificant W.I.P. mod that is mainly focused on space-related stuff. You might see some cosmic horrors here and there.
+
+The mod adds new weapons, some accessories, and will eventually add a couple bosses. We'll try to add some interesting features and mechanics, so stay tuned for that. 
+
+
+This mod is a reboot of the old "TenebraeMod" mod, effectively the same mod but redone for my own sanity's sake. And also for 1.4.
