@@ -1,6 +1,4 @@
-﻿using Terraria.ModLoader;
-
-namespace Tenebrae
+﻿namespace Tenebrae
 {
     public class TenebraeWorld : ModWorld
     {

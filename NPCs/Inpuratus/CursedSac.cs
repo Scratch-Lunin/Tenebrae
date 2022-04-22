@@ -1,10 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ID;
-using Tenebrae.Projectiles.Inpuratus;
-using Terraria.ModLoader;
-using System;
+﻿using Tenebrae.Projectiles.Inpuratus;
 
 namespace Tenebrae.NPCs.Inpuratus
 {

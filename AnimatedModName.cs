@@ -1,20 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MonoMod.RuntimeDetour.HookGen;
-using ReLogic.Content;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
-using Terraria.GameContent;
-using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader;
-using Terraria.UI.Chat;
-
-namespace Tenebrae
+﻿namespace Tenebrae
 {
     // By: S-Pladison
     // Code is quite simple, but there are a lot of reflections, which is not very good

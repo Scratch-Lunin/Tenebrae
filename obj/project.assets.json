@@ -1,49 +1,33 @@
 {
   "version": 3,
   "targets": {
-    ".NETFramework,Version=v4.5": {
-      "tModLoader.CodeAssist/0.1.3": {
-        "type": "package"
-      }
-    }
+    ".NETFramework,Version=v4.5": {}
   },
-  "libraries": {
-    "tModLoader.CodeAssist/0.1.3": {
-      "sha512": "2TVpwEsbJF+LZOGZ7q/VTTcsnFnQzngjVOcwkzGlXimFXEMjPROLjDv32F/eA+k2MLHtdL0DJ0JNWudUVs70fw==",
-      "type": "package",
-      "path": "tmodloader.codeassist/0.1.3",
-      "hasTools": true,
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "NugetIcon.png",
-        "analyzers/dotnet/cs/tModLoader.CodeAssist.dll",
-        "tmodloader.codeassist.0.1.3.nupkg.sha512",
-        "tmodloader.codeassist.nuspec",
-        "tools/install.ps1",
-        "tools/uninstall.ps1"
-      ]
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    ".NETFramework,Version=v4.5": [
-      "tModLoader.CodeAssist >= 0.1.*"
-    ]
+    ".NETFramework,Version=v4.5": []
   },
   "packageFolders": {
-    "C:\\Users\\Scratch\\.nuget\\packages\\": {}
+    "C:\\Users\\SPladison\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Scratch\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Tenebrae\\Tenebrae.csproj",
+      "projectUniqueName": "C:\\Users\\SPladison\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TenebraeMod\\Tenebrae.csproj",
       "projectName": "Tenebrae",
-      "projectPath": "C:\\Users\\Scratch\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Tenebrae\\Tenebrae.csproj",
-      "packagesPath": "C:\\Users\\Scratch\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Scratch\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Tenebrae\\obj\\",
+      "projectPath": "C:\\Users\\SPladison\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TenebraeMod\\Tenebrae.csproj",
+      "packagesPath": "C:\\Users\\SPladison\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\SPladison\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TenebraeMod\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Scratch\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\SPladison\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -68,13 +52,7 @@
     "frameworks": {
       "net45": {
         "targetAlias": "net45",
-        "dependencies": {
-          "tModLoader.CodeAssist": {
-            "target": "Package",
-            "version": "[0.1.*, )"
-          }
-        },
-        "runtimeIdentifierGraphPath": "C:\\Program Files (x86)\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
       }
     }
   }

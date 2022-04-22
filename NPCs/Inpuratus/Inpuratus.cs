@@ -1,13 +1,6 @@
-﻿using Terraria.ModLoader;
-using Terraria;
-using Terraria.ID;
-using Microsoft.Xna.Framework;
-using System;
-using Tenebrae.Projectiles.Inpuratus;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Tenebrae.Items.Armor;
 using Tenebrae.Items.Misc;
-using Terraria.Utilities;
-using Tenebrae.Items.Armor;
+using Tenebrae.Projectiles.Inpuratus;
 
 namespace Tenebrae.NPCs.Inpuratus
 {
@@ -140,7 +133,7 @@ namespace Tenebrae.NPCs.Inpuratus
         {
             if (!start)
             {
-            CurrentAttackState = AttackState.StompDown;
+                CurrentAttackState = AttackState.StompDown;
                 for (int i = 0; i < 4; i++)
                 {
                     FootPositions[i] = npc.Center;
@@ -215,7 +208,7 @@ namespace Tenebrae.NPCs.Inpuratus
                     }
                 }
                 if (CurrentAttackState == AttackState.StompDown)
-                { 
+                {
                     npc.velocity *= 0.93f;
                     npc.velocity *= 0.93f;
 
@@ -292,7 +285,7 @@ namespace Tenebrae.NPCs.Inpuratus
                     }
                 }
             }
-            
+
             npc.rotation = rot;
 
             for (int i = 0; i < 4; i++)
@@ -556,7 +549,7 @@ namespace Tenebrae.NPCs.Inpuratus
             }
         }
 
-        void SpawnPillars (bool startAtBottom)
+        void SpawnPillars(bool startAtBottom)
         {
             Projectile.NewProjectile(npc.Center, new Vector2(8, 0), ModContent.ProjectileType<InpuratusPillarSpawner>(), 10, 5);
             Projectile.NewProjectile(npc.Center, new Vector2(-8, 0), ModContent.ProjectileType<InpuratusPillarSpawner>(), 10, 5);

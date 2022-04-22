@@ -1,11 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-
-namespace Tenebrae.Projectiles.Inpuratus
+﻿namespace Tenebrae.Projectiles.Inpuratus
 {
     class CursedExplosion : ModProjectile
     {

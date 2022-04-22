@@ -1,9 +1,4 @@
 ﻿using Tenebrae.Buffs;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace Tenebrae
 {

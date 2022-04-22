@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-
-namespace Tenebrae.Items.Misc
+﻿namespace Tenebrae.Items.Misc
 {
     public class WarriorDebuffTest : ModItem
     {

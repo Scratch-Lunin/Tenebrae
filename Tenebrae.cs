@@ -1,10 +1,5 @@
-using System;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using System.Collections.Generic;
-using Tenebrae.Items.Placable;
 using Tenebrae.Items.Armor;
+using Tenebrae.Items.Placable;
 
 namespace Tenebrae
 {

@@ -1,20 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Scratch\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Tenebrae\\Tenebrae.csproj": {}
+    "C:\\Users\\SPladison\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TenebraeMod\\Tenebrae.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Scratch\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Tenebrae\\Tenebrae.csproj": {
+    "C:\\Users\\SPladison\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TenebraeMod\\Tenebrae.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Scratch\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Tenebrae\\Tenebrae.csproj",
+        "projectUniqueName": "C:\\Users\\SPladison\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TenebraeMod\\Tenebrae.csproj",
         "projectName": "Tenebrae",
-        "projectPath": "C:\\Users\\Scratch\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Tenebrae\\Tenebrae.csproj",
-        "packagesPath": "C:\\Users\\Scratch\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Scratch\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Tenebrae\\obj\\",
+        "projectPath": "C:\\Users\\SPladison\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TenebraeMod\\Tenebrae.csproj",
+        "packagesPath": "C:\\Users\\SPladison\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\SPladison\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\TenebraeMod\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Scratch\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\SPladison\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,13 +44,7 @@
       "frameworks": {
         "net45": {
           "targetAlias": "net45",
-          "dependencies": {
-            "tModLoader.CodeAssist": {
-              "target": "Package",
-              "version": "[0.1.*, )"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files (x86)\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

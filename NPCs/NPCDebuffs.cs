@@ -1,8 +1,3 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-
 namespace Tenebrae.NPCs
 {
     public class NPCDebuffs : GlobalNPC
@@ -28,7 +23,7 @@ namespace Tenebrae.NPCs
                     }
                     npc.lifeRegen -= npc.life * 10;
                 }
-            }   
+            }
         }
 
         public override void DrawEffects(NPC npc, ref Color drawColor)
