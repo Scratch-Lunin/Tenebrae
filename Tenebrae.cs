@@ -2,7 +2,16 @@ using Terraria.ModLoader;
 
 namespace Tenebrae
 {
-    public class Tenebrae : Mod
+    public partial class Tenebrae : Mod
     {
+        public override void Load()
+        {
+            LoadHooks();
+        }
+
+        public override void Unload()
+        {
+            UnloadHooks();
+        }
     }
 }

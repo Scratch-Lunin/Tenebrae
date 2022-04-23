@@ -10,7 +10,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
-namespace Tenebrae
+namespace Tenebrae.Common
 {
     // By: S-Pladison
     // Code is quite simple, but there are a lot of reflections, which is not very good
