@@ -95,8 +95,7 @@ namespace Tenebrae.Content.Items.Weapons.Mage
 
         public override bool CanUseItem(Player player)
         {
-            return true;
-            //return Main.projectile.Count(proj => proj.active && proj.type == Item.shoot && proj.owner == player.whoAmI && (proj.ModProjectile as StarburstStarProjectile).IsReadyToAttack) > 0;
+            return Main.projectile.Count(proj => proj.active && proj.type == Item.shoot && proj.owner == player.whoAmI && (proj.ModProjectile as StarburstStarProjectile).IsReadyToAttack) > 0;
         }
 
         public override void HoldStyle(Player player, Rectangle heldItemFrame)

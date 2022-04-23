@@ -10,6 +10,8 @@ namespace Tenebrae.Content.Items.Materials
 
         public override void SetStaticDefaults()
         {
+            SacrificeTotal = 100;
+
             DisplayName.SetDefault("Asterite Chunk");
             Tooltip.SetDefault("'Glimmers with heavenly energy'");
         }
