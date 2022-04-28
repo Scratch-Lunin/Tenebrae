@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Tenebrae.Common;
+using Tenebrae.Common.Particles;
 
 namespace Tenebrae.Content.Particles
 {

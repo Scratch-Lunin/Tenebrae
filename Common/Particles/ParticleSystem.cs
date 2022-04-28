@@ -2,7 +2,7 @@
 using System.Linq;
 using Terraria.ModLoader;
 
-namespace Tenebrae.Common
+namespace Tenebrae.Common.Particles
 {
     public class ParticleSystem : ModSystem
     {
@@ -45,9 +45,8 @@ namespace Tenebrae.Common
 
         // ...
 
-        public static int ActiveParticles => ActiveAlphaBlendParticles + ActiveAdditiveParticles;
-        public static int ActiveAlphaBlendParticles => particles[false].Count();
-        public static int ActiveAdditiveParticles => particles[false].Count();
+        public static bool Any() => Any(true) || Any(false);
+        public static bool Any(bool additive) => particles[additive].Any();
 
         public static Particle GetParticleInstance(int type)
         {
@@ -62,7 +61,7 @@ namespace Tenebrae.Common
             return t.Type;
         }
 
-        public static void DrawParticles(bool additive)
+        public static void Draw(bool additive)
         {
             foreach (var particle in particles[additive])
             {
@@ -78,6 +77,8 @@ namespace Tenebrae.Common
                 {
                     particle.Kill();
                 }
+
+                list.Clear();
             }
         }
 

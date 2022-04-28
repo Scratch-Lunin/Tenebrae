@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Tenebrae.Common;
+using Tenebrae.Common.AdditiveDrawing;
+using Tenebrae.Common.Particles;
 using Tenebrae.Common.PlayerDrawLayers;
 using Tenebrae.Content.Dusts;
 using Tenebrae.Content.Items.Materials;
@@ -95,7 +97,7 @@ namespace Tenebrae.Content.Items.Weapons.Mage
 
         public override bool CanUseItem(Player player)
         {
-            return Main.projectile.Count(proj => proj.active && proj.type == Item.shoot && proj.owner == player.whoAmI && (proj.ModProjectile as StarburstStarProjectile).IsReadyToAttack) > 0;
+            return Main.projectile.Any(proj => proj.active && proj.type == Item.shoot && proj.owner == player.whoAmI && (proj.ModProjectile as StarburstStarProjectile).IsReadyToAttack);
         }
 
         public override void HoldStyle(Player player, Rectangle heldItemFrame)
@@ -135,12 +137,12 @@ namespace Tenebrae.Content.Items.Weapons.Mage
 
         public override void UseStyle(Player player, Rectangle heldItemFrame)
         {
-            Lighting.AddLight(player.itemLocation, LightColor.ToVector3() * 0.3f * Main.essScale);
+            Lighting.AddLight(player.itemLocation, LightColor.ToVector3() * 0.2f * Main.essScale);
         }
 
         public override void PostUpdate()
         {
-            Lighting.AddLight(Item.Center, LightColor.ToVector3() * 0.3f * Main.essScale);
+            Lighting.AddLight(Item.Center, LightColor.ToVector3() * 0.2f * Main.essScale);
         }
 
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
@@ -185,7 +187,7 @@ namespace Tenebrae.Content.Items.Weapons.Mage
         }
     }
 
-    public class StarburstStarProjectile : ModProjectile
+    public class StarburstStarProjectile : ModProjectile, IAfterUpdatingCameraPosition
     {
         public static readonly Color[] StarColors = new[]
         {
@@ -348,42 +350,40 @@ namespace Tenebrae.Content.Items.Weapons.Mage
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Asset<Texture2D> texture;
-            Color color;
-
             var localProgress = 0.5f - MathF.Sin(Progress) / 2f;
             var drawPosition = Projectile.Center - Main.screenPosition;
             var colorNum = MathHelper.Lerp(0.8f, 1f, localProgress) * SpawnProgress;
+            var color = new Color(colorNum, colorNum, colorNum, 0.8f);
             var scale = MathHelper.Lerp(0.65f, 1f, localProgress) * Projectile.scale * SpawnProgress;
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
-            {
-                if (State == AIState.Attack)
-                {
-                    texture = ModAssets.GetExtraTexture(1);
-                    for (int k = 1; k < Projectile.oldPos.Length; k++)
-                    {
-                        var position = Projectile.oldPos[k] + Projectile.Size * 0.5f + Vector2.UnitY * Projectile.gfxOffY - Main.screenPosition;
-                        var num = (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length;
-                        var trailColor = Color.Lerp(StarColors[0], StarColors[1], num) * num;
-
-                        Main.EntitySpriteDraw(texture.Value, position, null, trailColor, Projectile.oldRot[k], texture.Size() * 0.5f, scale * num, SpriteEffects.None, 0);
-                    }
-                }
-
-                texture = ModContent.Request<Texture2D>(Texture + "_Effect");
-                color = StarColors[0] * colorNum;
-                Main.EntitySpriteDraw(texture.Value, drawPosition, null, color, Projectile.rotation, texture.Size() * 0.5f, scale, SpriteEffects.None, 0);
-            }
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
-
-            texture = TextureAssets.Projectile[Type];
-            color = new Color(colorNum, colorNum, colorNum, 0.8f);
+            var texture = TextureAssets.Projectile[Type];
             Main.EntitySpriteDraw(texture.Value, drawPosition, null, color, Projectile.rotation, texture.Size() * 0.5f, scale, SpriteEffects.None, 0);
 
             return false;
+        }
+
+        void IAfterUpdatingCameraPosition.PostUpdateCameraPosition()
+        {
+            Asset<Texture2D> texture;
+            Color color;
+            Vector2 scale = Projectile.scale * Vector2.One;
+
+            if (State == AIState.Attack)
+            {
+                texture = ModAssets.GetExtraTexture(1);
+                for (int k = 1; k < Projectile.oldPos.Length; k++)
+                {
+                    var position = Projectile.oldPos[k] + Projectile.Size * 0.5f + Vector2.UnitY * Projectile.gfxOffY - Main.screenPosition;
+                    var num = (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length;
+                    var trailColor = Color.Lerp(StarColors[0], StarColors[1], num) * num;
+                    AdditiveDrawSystem.AddToDataCache(new AdditiveDrawData(texture.Value, position, null, trailColor, Projectile.oldRot[k], texture.Size() * 0.5f, scale * num, SpriteEffects.None, true));
+                }
+            }
+
+            var drawPosition = Projectile.Center - Main.screenPosition;
+            var localProgress = 0.5f - MathF.Sin(Progress) / 2f;
+            texture = ModContent.Request<Texture2D>(Texture + "_Effect");
+            color = StarColors[0] * MathHelper.Lerp(0.8f, 1f, localProgress) * SpawnProgress;
+            AdditiveDrawSystem.AddToDataCache(new AdditiveDrawData(texture.Value, drawPosition, null, color, Projectile.rotation, texture.Size() * 0.5f, scale, SpriteEffects.None, true));
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -429,7 +429,7 @@ namespace Tenebrae.Content.Items.Weapons.Mage
         }
     }
 
-    public class StarburstStarHitProjectile : ModProjectile, IDrawAdditive
+    public class StarburstStarHitProjectile : ModProjectile, IAfterUpdatingCameraPosition
     {
         public override string Texture => ModAssets.InvisiblePath;
 
@@ -471,17 +471,18 @@ namespace Tenebrae.Content.Items.Weapons.Mage
 
         public override bool PreDraw(ref Color lightColor) => false;
 
-        void IDrawAdditive.DrawAdditive(SpriteBatch spriteBatch)
+        void IAfterUpdatingCameraPosition.PostUpdateCameraPosition()
         {
             var drawPosition = Projectile.Center - Main.screenPosition;
             var texture = ModAssets.GetExtraTexture(0);
             var origin = texture.Size() * 0.5f + new Vector2(0, 8);
             var progress = 1 - Math.Abs(1 - Projectile.timeLeft / 10f);
             var color = StarburstStarProjectile.StarColors[1];
+            var scale = Projectile.scale * Vector2.One * progress;
             color.A = 255;
 
-            spriteBatch.Draw(texture.Value, drawPosition, null, color * 0.7f, Projectile.rotation, origin, Projectile.scale * 0.5f * progress, SpriteEffects.None, 0);
-            spriteBatch.Draw(texture.Value, drawPosition, null, color * 0.5f, -Projectile.rotation, origin, Projectile.scale * 0.4f * progress, SpriteEffects.None, 0);
+            AdditiveDrawSystem.AddToDataCache(new AdditiveDrawData(texture.Value, drawPosition, null, color * 0.7f, Projectile.rotation, origin, scale * 0.5f, SpriteEffects.None, false));
+            AdditiveDrawSystem.AddToDataCache(new AdditiveDrawData(texture.Value, drawPosition, null, color * 0.5f, -Projectile.rotation, origin, scale * 0.4f, SpriteEffects.None, false));
         }
     }
 }

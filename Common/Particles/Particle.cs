@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 
-namespace Tenebrae.Common
+namespace Tenebrae.Common.Particles
 {
     public abstract class Particle : ModTexturedType
     {
