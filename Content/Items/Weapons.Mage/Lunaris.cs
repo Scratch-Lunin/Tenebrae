@@ -62,7 +62,7 @@ namespace Tenebrae.Content.Items.Weapons.Mage
             Item.autoReuse = true;
 
             Item.shoot = ModContent.ProjectileType<LunarisProjectile>();
-            Item.shootSpeed = 16f;
+            Item.shootSpeed = 22f;
         }
 
         public override bool AltFunctionUse(Player player) => true;
@@ -98,19 +98,20 @@ namespace Tenebrae.Content.Items.Weapons.Mage
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (player.altFunctionUse != 2)
+            if (player.altFunctionUse == 2) return true;
+
+            var hasClock = player.ownedProjectileCounts[ModContent.ProjectileType<LunarisClockProjectile>()] > 0;
+            if (!hasClock)
             {
-                var hasClock = player.ownedProjectileCounts[ModContent.ProjectileType<LunarisClockProjectile>()] > 0;
-                var proj = Main.projectile[Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0, velocity.Length())];
-
-                if (hasClock && proj.ModProjectile is LunarisProjectile modProj)
-                {
-                    modProj.ChangeState(LunarisProjectile.AIState.AutoAiming);
-                }
-
+                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0, velocity.Length());
                 return false;
             }
-            return true;
+
+            for (int i = 0; i < 2; i++)
+            {
+                Projectile.NewProjectile(source, position, velocity.RotatedBy(0.2f - 0.4f * i), type, damage, knockback, player.whoAmI, 0, velocity.Length());
+            }
+            return false;
         }
 
         public override bool CanUseItem(Player player)
@@ -197,9 +198,22 @@ namespace Tenebrae.Content.Items.Weapons.Mage
 
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
-            Projectile.penetrate = 4;
+            Projectile.penetrate = -1;
 
             Projectile.timeLeft = 60 * 15;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            var hasClock = Main.player[Projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<LunarisClockProjectile>()] > 0;
+            
+            if (hasClock)
+            {
+                ChangeState(AIState.AutoAiming);
+                return;
+            }
+
+            ChangeState(AIState.WithoutAutoAiming);
         }
 
         public override void AI()
@@ -266,8 +280,6 @@ namespace Tenebrae.Content.Items.Weapons.Mage
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Projectile.penetrate -= 1;
-
             if (Projectile.velocity.X != oldVelocity.X)
             {
                 Projectile.velocity.X = -oldVelocity.X;
@@ -298,8 +310,7 @@ namespace Tenebrae.Content.Items.Weapons.Mage
 
         public void OnHit()
         {
-            if (Projectile.penetrate > 1) return;
-
+            if (State == AIState.AutoAiming) return;
             ChangeState(AIState.AutoAiming);
         }
 
@@ -308,7 +319,6 @@ namespace Tenebrae.Content.Items.Weapons.Mage
             if (state == AIState.AutoAiming)
             {
                 Projectile.timeLeft = 60 * 2;
-                Projectile.penetrate = -1;
             }
 
             State = state;
@@ -391,19 +401,19 @@ namespace Tenebrae.Content.Items.Weapons.Mage
             Projectile.timeLeft = 60 * 12 + 5;
         }
 
+        public override void OnSpawn(IEntitySource source)
+        {
+            romanNumbers = new List<RomanNumber>(12);
+
+            for (int i = 1; i <= 12; i++)
+            {
+                var texture = ModContent.Request<Texture2D>(ModAssets.ProjectilesPath + nameof(LunarisClockProjectile) + "_Numbers", AssetRequestMode.ImmediateLoad);
+                romanNumbers.Add(new RomanNumber(i, texture));
+            }
+        }
+
         public override void AI()
         {
-            // It's better to move this to OnSpawn when it's available
-            if (romanNumbers == null)
-            {
-                romanNumbers = new List<RomanNumber>();
-                for (int i = 1; i <= 12; i++)
-                {
-                    var texture = ModContent.Request<Texture2D>(ModAssets.ProjectilesPath + nameof(LunarisClockProjectile) + "_Numbers", AssetRequestMode.ImmediateLoad);
-                    romanNumbers.Add(new RomanNumber(i, texture));
-                }
-            }
-
             foreach (var number in romanNumbers)
             {
                 number.Update();

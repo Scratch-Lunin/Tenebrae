@@ -118,9 +118,9 @@ namespace Tenebrae.Content.Items.Weapons.Mage
                 // Creating new ones with a unique index
                 for (int index = 0; index < 3; index++)
                 {
-                    if (stars.ContainsKey(index)) return;
+                    if (stars.ContainsKey(index)) continue;
 
-                    var proj = Projectile.NewProjectile(player.GetProjectileSource_Item(Item), player.Center, Vector2.Zero, Item.shoot, Item.damage, Item.knockBack, player.whoAmI, ai0: index);
+                    var proj = Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.Center, Vector2.Zero, Item.shoot, Item.damage, Item.knockBack, player.whoAmI, ai0: index);
                     stars.Add(index, proj);
                 }
 
@@ -424,7 +424,7 @@ namespace Tenebrae.Content.Items.Weapons.Mage
             ChangeState(AIState.Spawn);
             Target = null;
 
-            Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<StarburstStarHitProjectile>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<StarburstStarHitProjectile>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             return;
         }
     }
