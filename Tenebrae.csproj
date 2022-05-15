@@ -18,5 +18,6 @@
   <ItemGroup>
     <Folder Include="Assets\Textures\Items\" />
     <Folder Include="Assets\Textures\Projectiles\" />
+    <Folder Include="Content\Items\Pets\" />
   </ItemGroup>
 </Project>

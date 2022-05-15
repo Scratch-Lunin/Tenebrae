@@ -18,7 +18,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Tenebrae.Content.Items.Weapons.Mage
+namespace Tenebrae.Content.Items.Weapons
 {
     public class Lunaris : ModItem
     {
@@ -35,7 +35,10 @@ namespace Tenebrae.Content.Items.Weapons.Mage
             SacrificeTotal = 1;
 
             DisplayName.SetDefault("Lunaris");
-            Tooltip.SetDefault("'There could be your ad here'");
+            Tooltip.SetDefault(
+                "<left> to cast bouncing crescent wheels that target nearby enemies\n" +
+                "<right> to summon a lunar clock that fires crescent wheels on left-click"
+                );
 
             HeldItemLayer.RegisterItemGlowmask(Type, DrawItemGlowmask);
         }

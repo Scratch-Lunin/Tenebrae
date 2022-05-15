@@ -19,7 +19,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Tenebrae.Content.Items.Weapons.Mage
+namespace Tenebrae.Content.Items.Weapons
 {
     public class StarburstScepter : ModItem
     {

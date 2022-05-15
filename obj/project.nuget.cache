@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "VK4s5Mbm+pme0kHGD+OxvLvFQicDoyof0Qf2EfYqg7BMobNTFRi6BztpU/JQ4DYy+bFc11krdHP7kd05jPnfpQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Scratch\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\Tenebrae\\Tenebrae.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Scratch\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
+  ],
+  "logs": []
+}

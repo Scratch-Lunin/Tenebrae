@@ -9,6 +9,7 @@ namespace Tenebrae
         public const string Path = nameof(Tenebrae) + "/Assets/";
 
         public const string ItemsPath = Path + "Textures/Items/";
+        public const string BuffsPath = Path + "Textures/Buffs/";
         public const string ProjectilesPath = Path + "Textures/Projectiles/";
         public const string DustsPath = Path + "Textures/Dusts/";
         public const string ParticlesPath = Path + "Textures/Particles/";
