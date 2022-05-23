@@ -28,7 +28,7 @@ namespace Tenebrae.Content.Items.Weapons
 
         // ...
 
-        public override string Texture => ModAssets.ItemsPath + nameof(Lunaris);
+        public override string Texture => ModAssets.ItemsPath + Name;
 
         public override void SetStaticDefaults()
         {
@@ -165,7 +165,7 @@ namespace Tenebrae.Content.Items.Weapons
         }
     }
 
-    public class LunarisProjectile : ModProjectile, IAfterUpdatingCameraPosition
+    public class LunarisProjectile : ModProjectile, IPostUpdateCameraPosition
     {
         public enum AIState
         {
@@ -181,7 +181,7 @@ namespace Tenebrae.Content.Items.Weapons
 
         public const float TimerMaxValue = 20;
 
-        public override string Texture => ModAssets.ProjectilesPath + nameof(LunarisProjectile);
+        public override string Texture => ModAssets.ProjectilesPath + Name;
 
         public override void SetStaticDefaults()
         {
@@ -348,7 +348,7 @@ namespace Tenebrae.Content.Items.Weapons
             return false;
         }
 
-        void IAfterUpdatingCameraPosition.PostUpdateCameraPosition()
+        void IPostUpdateCameraPosition.PostUpdateCameraPosition()
         {
             var drawPosition = Projectile.Center - Main.screenPosition;
             var scale = Projectile.scale * Vector2.One;
@@ -373,7 +373,7 @@ namespace Tenebrae.Content.Items.Weapons
         }
     }
 
-    public class LunarisClockProjectile : ModProjectile, IAfterUpdatingCameraPosition
+    public class LunarisClockProjectile : ModProjectile, IPostUpdateCameraPosition
     {
         private List<RomanNumber> romanNumbers;
 
@@ -382,7 +382,7 @@ namespace Tenebrae.Content.Items.Weapons
 
         // ...
 
-        public override string Texture => ModAssets.ProjectilesPath + nameof(LunarisClockProjectile);
+        public override string Texture => ModAssets.ProjectilesPath + Name;
 
         public override void SetStaticDefaults()
         {
@@ -482,7 +482,7 @@ namespace Tenebrae.Content.Items.Weapons
             return false;
         }
 
-        void IAfterUpdatingCameraPosition.PostUpdateCameraPosition()
+        void IPostUpdateCameraPosition.PostUpdateCameraPosition()
         {
             var drawPosition = GetDrawPosition();
             var color = new Color(188, 101, 191);

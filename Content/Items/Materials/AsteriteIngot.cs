@@ -15,7 +15,7 @@ namespace Tenebrae.Content.Items.Materials
 
         // ...
 
-        public override string Texture => ModAssets.ItemsPath + nameof(AsteriteIngot);
+        public override string Texture => ModAssets.ItemsPath + Name;
 
         public override void SetStaticDefaults()
         {

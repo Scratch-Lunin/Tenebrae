@@ -9,12 +9,17 @@ namespace Tenebrae.Content.Items.Pets
 {
     public class HandheldCruxtruder : ModItem
     {
-        public override string Texture => ModAssets.ItemsPath + nameof(HandheldCruxtruder);
+        public override string Texture => ModAssets.ItemsPath + Name;
 
         public override void SetStaticDefaults()
         {
+            SacrificeTotal = 1;
+
             DisplayName.SetDefault("Handheld Cruxtruder");
-            Tooltip.SetDefault("Releases the Kernelsprite\nThe Kernelsprite's color is affected by the color of your eyes");
+            Tooltip.SetDefault(
+                "Releases the Kernelsprite\n" +
+                "The Kernelsprite's color is affected by the color of your eyes"
+            );
         }
 
         public override void SetDefaults()
@@ -31,18 +36,20 @@ namespace Tenebrae.Content.Items.Pets
             Item.UseSound = SoundID.Item105;
             Item.useStyle = ItemUseStyleID.Swing; // 1 is the useStyle
 
-            Item.shoot = Mod.Find<ModProjectile>("Kernelsprite").Type; // "Shoot" your pet projectile.
-            Item.buffType = Mod.Find<ModBuff>("KernelBuff").Type; // Apply buff upon usage of the Item.
+            Item.shoot = ModContent.ProjectileType<KernelspriteProjectile>(); // "Shoot" your pet projectile.
+            Item.buffType = ModContent.BuffType<KernelBuff>(); // Apply buff upon usage of the Item.
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             Vector2 dowelVelocity = player.Center.DirectionTo(Main.MouseWorld) * Main.rand.Next(2, 3);
-
             Vector2 perturbedSpeed = new Vector2(dowelVelocity.X, dowelVelocity.Y).RotatedByRandom(MathHelper.ToRadians(10));
+
             dowelVelocity.X = perturbedSpeed.X;
             dowelVelocity.Y = perturbedSpeed.Y;
-            Projectile.NewProjectile(source, player.Center.X, player.Center.Y, dowelVelocity.X, dowelVelocity.Y, Mod.Find<ModProjectile>("CruxtruderDowel").Type, 0, 0, player.whoAmI);
+
+            Projectile.NewProjectile(source, player.Center.X, player.Center.Y, dowelVelocity.X, dowelVelocity.Y, ModContent.ProjectileType<CruxtruderDowelProjectile>(), 0, 0, player.whoAmI);
+
             return true;
         }
 
@@ -55,55 +62,51 @@ namespace Tenebrae.Content.Items.Pets
         }
     }
 
-    public class Kernelsprite : ModProjectile
+    public class KernelspriteProjectile : ModProjectile
     {
-        public override string Texture => ModAssets.ProjectilesPath + nameof(Kernelsprite);
+        public override string Texture => ModAssets.ProjectilesPath + Name;
 
-        bool projSpawned = false;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Kernelsprite");
-            Main.projFrames[Projectile.type] = 4;
-            Main.projPet[Projectile.type] = true;
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
-            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+
+            Main.projFrames[Type] = 4;
+            Main.projPet[Type] = true;
+
+            ProjectileID.Sets.TrailCacheLength[Type] = 3;
+            ProjectileID.Sets.TrailingMode[Type] = 0;
         }
 
         public override void SetDefaults()
         {
-            Projectile.width = 14;
-            Projectile.height = 20;
+            AIType = ProjectileID.BabySkeletronHead;
+            Projectile.CloneDefaults(ProjectileID.ZephyrFish); // Copy the stats of the Zephyr Fish
+
             Projectile.width = 30;
             Projectile.height = 30;
             Projectile.tileCollide = false; // Makes the minion go through tiles freely
             Projectile.penetrate = -1;
-            AIType = ProjectileID.BabySkeletronHead; // Copy the AI of the Zephyr Fish.
-            Projectile.CloneDefaults(ProjectileID.ZephyrFish); // Copy the stats of the Zephyr Fish
         }
 
         public override bool PreAI()
         {
-            Player player = Main.player[Projectile.owner];
-
-            player.skeletron = false; // Relic from aiType
-
+            Main.player[Projectile.owner].skeletron = false; // Relic from aiType
             return true;
         }
 
-        public override void AI()
+        public override void OnSpawn(IEntitySource source)
         {
-            Projectile.rotation = 0f;
-            /*if (!projSpawned) //spawns dowel
-            {
-                projSpawned = true;
-                Vector2 dowelVelocity = Main.player[Projectile.owner].DirectionTo(Main.MouseWorld) * Main.rand.Next(2, 3);
+            /*Vector2 dowelVelocity = Main.player[Projectile.owner].DirectionTo(Main.MouseWorld) * Main.rand.Next(2, 3);
 
                 Vector2 perturbedSpeed = new Vector2(dowelVelocity.X, dowelVelocity.Y).RotatedByRandom(MathHelper.ToRadians(10));
                 dowelVelocity.X = perturbedSpeed.X;
                 dowelVelocity.Y = perturbedSpeed.Y;
                 Projectile.NewProjectile(source, Projectile.Center.X, Projectile.Center.Y, dowelVelocity.X, dowelVelocity.Y, Mod.Find<ModProjectile>("Dowel").Type, 0, 0, Projectile.owner);
-            }*/
+            */
+        }
 
+        public override void AI()
+        {
             Player player = Main.player[Projectile.owner];
 
             // Keep the projectile from disappearing as long as the player isn't dead and has the pet buff.
@@ -115,6 +118,7 @@ namespace Tenebrae.Content.Items.Pets
             // This is a simple "loop through all frames from top to bottom" animation
             int frameSpeed = 5;
 
+            Projectile.rotation = 0f;
             Projectile.frameCounter++;
 
             if (Projectile.frameCounter >= frameSpeed)
@@ -159,37 +163,41 @@ namespace Tenebrae.Content.Items.Pets
             spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, projectile.frame * texture.Height / Main.projFrames[projectile.type], texture.Width, texture.Height / Main.projFrames[projectile.type]), mainColor, projectile.rotation, new Vector2(texture.Width / 2, texture.Height / Main.projFrames[projectile.type] / 2), projectile.scale, SpriteEffects.None, 1f);
             return false;
         }*/
+
         public override bool PreDraw(ref Color lightColor)
         {
             //Redraw the projectile with the color not influenced by light
             //Texture2D texture = ModContent.GetTexture("ScratchTest/Pets/Kernelsprite_Color");
             Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
-            Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, Projectile.height / Main.projFrames[Projectile.type] * 0.5f);
-            Rectangle rect = new Rectangle(0, Projectile.frame * texture.Height / Main.projFrames[Projectile.type], texture.Width, texture.Height / Main.projFrames[Projectile.type]);
-            Color Eyes = Main.player[Projectile.owner].eyeColor;
+            Vector2 drawOrigin = new(texture.Width * 0.5f, Projectile.height / Main.projFrames[Projectile.type] * 0.5f);
+            Rectangle rect = new(0, Projectile.frame * texture.Height / Main.projFrames[Projectile.type], texture.Width, texture.Height / Main.projFrames[Projectile.type]);
+            Color eyeColor = Main.player[Projectile.owner].eyeColor;
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Color color = Eyes * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-
+                Color color = eyeColor * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+
                 Main.EntitySpriteDraw(texture, drawPos, rect, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, (int)0f);
             }
+
             return true;
         }
 
         public override void PostDraw(Color lightColor)
         {
             Texture2D texture = ModContent.Request<Texture2D>(Texture + "_Color").Value;
-            Color Eyes = Main.player[Projectile.owner].eyeColor;
+            Color eyeColor = Main.player[Projectile.owner].eyeColor;
+            Vector2 position = Projectile.Center - Main.screenPosition + new Vector2(2);
+            Rectangle rectangle = new(0, Projectile.frame * texture.Height / Main.projFrames[Projectile.type], texture.Width, texture.Height / Main.projFrames[Projectile.type]);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(2), new Rectangle(0, Projectile.frame * texture.Height / Main.projFrames[Projectile.type], texture.Width, texture.Height / Main.projFrames[Projectile.type]), Eyes, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / Main.projFrames[Projectile.type] / 2), Projectile.scale, SpriteEffects.None, (int)1f);
+            Main.EntitySpriteDraw(texture, position, rectangle, eyeColor, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / Main.projFrames[Projectile.type] / 2), Projectile.scale, SpriteEffects.None, (int)1f);
         }
     }
 
-    public class CruxtruderDowel : ModProjectile
+    public class CruxtruderDowelProjectile : ModProjectile
     {
-        public override string Texture => ModAssets.ProjectilesPath + nameof(CruxtruderDowel);
+        public override string Texture => ModAssets.ProjectilesPath + Name;
 
         public override void SetStaticDefaults()
         {
@@ -213,12 +221,15 @@ namespace Tenebrae.Content.Items.Pets
         public override void AI()
         {
             Projectile.velocity.Y = Projectile.velocity.Y + 0.2f; // 0.1f for arrow gravity, 0.4f for knife gravity
+
             if (Projectile.velocity.Y > 10f) // Terminal vel
             {
                 Projectile.velocity.Y = 10f;
             }
+
             Projectile.rotation += Projectile.velocity.X / 20;
             //projectile.velocity.X = projectile.velocity.X * 0.99f; // 0.99f for rolling grenade speed reduction. Try values between 0.9f and 0.99f
+
             if (Projectile.penetrate > 1)
             {
                 Projectile.ai[0] = 60 * 3;
@@ -226,6 +237,7 @@ namespace Tenebrae.Content.Items.Pets
             else
             {
                 Projectile.ai[0]--;
+
                 if (Projectile.ai[0] == 0)
                 {
                     Projectile.Kill();
@@ -235,37 +247,29 @@ namespace Tenebrae.Content.Items.Pets
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Color Eyes = Main.player[Projectile.owner].eyeColor;
+            Color eyeColor = Main.player[Projectile.owner].eyeColor;
             Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Eyes, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, SpriteEffects.None, (int)0f);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), eyeColor, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, SpriteEffects.None, (int)0f);
             return false;
         }
 
         public override void Kill(int timeLeft) //spawn dust on death
         {
+            Color eyeColor = Main.player[Projectile.owner].eyeColor;
+
             for (int i = 0; i < 8; i++)
             {
-                Color Eyes = Main.player[Projectile.owner].eyeColor;
-                Vector2 position = Projectile.Center;
-                int dust = Dust.NewDust(position, 5, 5, DustID.Stone, 0f, 0f, 0, Eyes, 1f);
-                Main.dust[dust].noGravity = true;
+                Dust dust = Main.dust[Dust.NewDust(Projectile.Center, 5, 5, DustID.Stone, 0f, 0f, 0, eyeColor, 1f)];
+                dust.noGravity = true;
             }
         }
         public override bool OnTileCollide(Vector2 oldVelocity) //bounce code
         {
-            if (Projectile.penetrate > 1)
-            {
-                Projectile.penetrate--;
-            }
-            if (Projectile.velocity.X != oldVelocity.X)
-            {
-                Projectile.velocity.X = -oldVelocity.X;
-            }
-            if (Projectile.velocity.Y != oldVelocity.Y)
-            {
-                Projectile.velocity.Y = -oldVelocity.Y;
-            }
+            if (Projectile.penetrate > 1) Projectile.penetrate--;
+            if (Projectile.velocity.X != oldVelocity.X) Projectile.velocity.X = -oldVelocity.X;
+            if (Projectile.velocity.Y != oldVelocity.Y) Projectile.velocity.Y = -oldVelocity.Y;
+
             Projectile.velocity.X *= 0.3f;
             Projectile.velocity.Y *= 0.2f;
 
@@ -275,12 +279,12 @@ namespace Tenebrae.Content.Items.Pets
 
     public class KernelBuff : ModBuff
     {
-        public override string Texture => ModAssets.BuffsPath + nameof(KernelBuff);
+        public override string Texture => ModAssets.BuffsPath + Name;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Kernelsprite");
-            Description.SetDefault("An unprototyped Kernelsprite is following you.");
+            Description.SetDefault("An unprototyped Kernelsprite is following you");
 
             Main.buffNoTimeDisplay[Type] = true;
             Main.vanityPet[Type] = true;
@@ -288,15 +292,13 @@ namespace Tenebrae.Content.Items.Pets
 
         public override void Update(Player player, ref int buffIndex)
         {
-            // If the minions exist reset the buff time, otherwise remove the buff from the player
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<Kernelsprite>()] > 0)
+            player.buffTime[buffIndex] = 18000;
+
+            bool petProjectileNotSpawned = player.ownedProjectileCounts[ModContent.ProjectileType<KernelspriteProjectile>()] <= 0;
+
+            if (petProjectileNotSpawned && player.whoAmI == Main.myPlayer)
             {
-                player.buffTime[buffIndex] = 18000;
-            }
-            else
-            {
-                player.DelBuff(buffIndex);
-                buffIndex--;
+                Projectile.NewProjectile(player.GetSource_Buff(buffIndex), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<KernelspriteProjectile>(), 0, 0f, player.whoAmI, 0f, 0f);
             }
         }
     }

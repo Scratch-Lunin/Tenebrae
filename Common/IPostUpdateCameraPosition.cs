@@ -1,6 +1,6 @@
 ﻿namespace Tenebrae.Common
 {
-    public interface IAfterUpdatingCameraPosition
+    public interface IPostUpdateCameraPosition
     {
         void PostUpdateCameraPosition();
     }

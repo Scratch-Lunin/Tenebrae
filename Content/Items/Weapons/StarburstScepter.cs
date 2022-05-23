@@ -27,7 +27,7 @@ namespace Tenebrae.Content.Items.Weapons
 
         // ...
 
-        public override string Texture => ModAssets.ItemsPath + nameof(StarburstScepter);
+        public override string Texture => ModAssets.ItemsPath + Name;
 
         public override void SetStaticDefaults()
         {
@@ -187,7 +187,7 @@ namespace Tenebrae.Content.Items.Weapons
         }
     }
 
-    public class StarburstStarProjectile : ModProjectile, IAfterUpdatingCameraPosition
+    public class StarburstStarProjectile : ModProjectile, IPostUpdateCameraPosition
     {
         public static readonly Color[] StarColors = new[]
         {
@@ -214,7 +214,7 @@ namespace Tenebrae.Content.Items.Weapons
 
         // ...
 
-        public override string Texture => ModAssets.ProjectilesPath + nameof(StarburstStarProjectile);
+        public override string Texture => ModAssets.ProjectilesPath + Name;
 
         public override void SetStaticDefaults()
         {
@@ -361,7 +361,7 @@ namespace Tenebrae.Content.Items.Weapons
             return false;
         }
 
-        void IAfterUpdatingCameraPosition.PostUpdateCameraPosition()
+        void IPostUpdateCameraPosition.PostUpdateCameraPosition()
         {
             Asset<Texture2D> texture;
             Color color;
@@ -429,7 +429,7 @@ namespace Tenebrae.Content.Items.Weapons
         }
     }
 
-    public class StarburstStarHitProjectile : ModProjectile, IAfterUpdatingCameraPosition
+    public class StarburstStarHitProjectile : ModProjectile, IPostUpdateCameraPosition
     {
         public override string Texture => ModAssets.InvisiblePath;
 
@@ -471,7 +471,7 @@ namespace Tenebrae.Content.Items.Weapons
 
         public override bool PreDraw(ref Color lightColor) => false;
 
-        void IAfterUpdatingCameraPosition.PostUpdateCameraPosition()
+        void IPostUpdateCameraPosition.PostUpdateCameraPosition()
         {
             var drawPosition = Projectile.Center - Main.screenPosition;
             var texture = ModAssets.GetExtraTexture(0);
