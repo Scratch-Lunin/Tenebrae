@@ -80,7 +80,7 @@ namespace Tenebrae
 
             foreach (var system in Tenebrae.Instance.GetModSystems())
             {
-                if (system is IAfterUpdatingCameraPosition obj)
+                if (system is IPostUpdateCameraPosition obj)
                 {
                     obj.PostUpdateCameraPosition();
                 }
@@ -88,7 +88,7 @@ namespace Tenebrae
 
             foreach (var proj in Main.projectile)
             {
-                if (proj.active && proj.ModProjectile is IAfterUpdatingCameraPosition obj)
+                if (proj.active && proj.ModProjectile is IPostUpdateCameraPosition obj)
                 {
                     obj.PostUpdateCameraPosition();
                 }

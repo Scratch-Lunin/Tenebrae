@@ -6,7 +6,7 @@ namespace Tenebrae.Content.Items.Materials
 {
     public class AsteriteChunk : ModItem
     {
-        public override string Texture => ModAssets.ItemsPath + nameof(AsteriteChunk);
+        public override string Texture => ModAssets.ItemsPath + Name;
 
         public override void SetStaticDefaults()
         {

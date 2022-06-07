@@ -8,7 +8,7 @@ namespace Tenebrae.Content.Dusts
     {
         public static readonly Color LightColor = new(244, 179, 12);
 
-        public override string Texture => ModAssets.DustsPath + nameof(AsteriteDust);
+        public override string Texture => ModAssets.DustsPath + Name;
 
         public override void OnSpawn(Dust dust)
         {
