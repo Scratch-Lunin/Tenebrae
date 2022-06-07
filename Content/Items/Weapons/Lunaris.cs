@@ -37,7 +37,7 @@ namespace Tenebrae.Content.Items.Weapons
             DisplayName.SetDefault("Lunaris");
             Tooltip.SetDefault(
                 "<left> to cast bouncing crescent wheels that target nearby enemies\n" +
-                "<right> to summon a lunar clock that fires crescent wheels on left-click"
+                "<right> to summon a lunar clock that fires crescent wheels on <left>"
                 );
 
             HeldItemLayer.RegisterItemGlowmask(Type, DrawItemGlowmask);
@@ -78,7 +78,7 @@ namespace Tenebrae.Content.Items.Weapons
                 position = Main.MouseWorld;
                 velocity = Vector2.Zero;
 
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/MagicAppear"), position);
+                SoundEngine.PlaySound(new SoundStyle("Tenebrae/Assets/Sounds/MagicAppear"), position);
                 return;
             }
 
@@ -110,7 +110,8 @@ namespace Tenebrae.Content.Items.Weapons
                 return false;
             }
 
-            for (int i = 0; i < 2; i++)
+            int rand = Main.rand.Next(2, 5);
+            for (int i = 0; i < rand; i++)
             {
                 Projectile.NewProjectile(source, position, velocity.RotatedBy(0.2f - 0.4f * i), type, damage, knockback, player.whoAmI, 0, velocity.Length());
             }
@@ -403,7 +404,7 @@ namespace Tenebrae.Content.Items.Weapons
 
             Projectile.timeLeft = 60 * 12 + 5;
         }
-
+            
         public override void OnSpawn(IEntitySource source)
         {
             romanNumbers = new List<RomanNumber>(12);
@@ -429,8 +430,7 @@ namespace Tenebrae.Content.Items.Weapons
                 {
                     romanNumbers[index].Appear();
                     PulsationProgress = 1.3f;
-                    var sound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Clock"), Projectile.Center);
-                    sound.Volume *= 0.65f;
+                    SoundEngine.PlaySound(new SoundStyle("Tenebrae/Assets/Sounds/Clock") { Volume = 0.65f }, Projectile.Center);
                 }
             }
 
@@ -439,7 +439,7 @@ namespace Tenebrae.Content.Items.Weapons
             {
                 if (Projectile.timeLeft == deathTime)
                 {
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Bell"), Projectile.Center);
+                    SoundEngine.PlaySound(new SoundStyle("Tenebrae/Assets/Sounds/Bell"), Projectile.Center);
                 }
 
                 DeathProgress = Math.Min(DeathProgress + 1 / deathTime, 1);

@@ -18,7 +18,7 @@ namespace Tenebrae.Content.Items.Pets
         }
 
         public override void SetDefaults()
-        {
+        {   
             Item.useTime = 20;
             Item.width = 36;
             Item.height = 36;
